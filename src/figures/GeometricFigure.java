@@ -1,8 +1,9 @@
 package figures;
 
+import javax.swing.*;
 import java.awt.*;
 
-abstract public class GeometricFigure {
+abstract public class GeometricFigure extends JPanel{
 
     private int x, y;
 
@@ -10,9 +11,17 @@ abstract public class GeometricFigure {
     public abstract float getArea();
     public abstract void draw(Graphics g);
 
-    public GeometricFigure(int x, int y) {
+    GeometricFigure(int x, int y) {
+        super();
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw(g);
+        System.out.println("FigureDraw");
     }
 
     public int getX() {
@@ -22,5 +31,4 @@ abstract public class GeometricFigure {
     public int getY() {
         return y;
     }
-
 }
