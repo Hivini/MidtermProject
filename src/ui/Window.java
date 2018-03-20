@@ -12,8 +12,11 @@ public class Window extends JFrame {
 
     private JLabel area = new JLabel();
     private JLabel perimeter = new JLabel();
-    private static JLabel displayLabel = new JLabel("Select a figure");
-    private static JTextField figureSize = new JTextField();
+    private static JLabel displayLabel = new JLabel("Select a figure", SwingConstants.CENTER);
+    private static JTextField figureSize = new JTextField("50");
+    private Color circleColor = Color.red;
+    private Color rectangleColor = Color.blue;
+    private Color triangleColor = Color.green;
 
     public Window() {
         super("Paint without budget");
@@ -25,21 +28,29 @@ public class Window extends JFrame {
         JPanel controls = new JPanel();
         controls.setLayout(new GridLayout(4, 2, 15, 40));
         controls.add(displayLabel);
-        controls.add(figureSize);
+        JPanel sizeFlow = new JPanel();
+        sizeFlow.setLayout(new GridLayout(2, 1));
+        sizeFlow.add(new JLabel("Enter size:", SwingConstants.CENTER));
+        figureSize.setHorizontalAlignment(SwingConstants.CENTER);
+        sizeFlow.add(figureSize);
+        controls.add(sizeFlow);
 
         JButton circleButton = new JButton("Circle");
+        circleButton.setForeground(circleColor);
         circleButton.addActionListener(e -> {
             displayLabel.setText("Circle");
         });
         controls.add(circleButton);
 
         JButton rectButton = new JButton("Rectangle");
+        rectButton.setForeground(rectangleColor);
         rectButton.addActionListener(e -> {
             displayLabel.setText("Rectangle");
         });
         controls.add(rectButton);
 
         JButton triangleButton = new JButton("Triangle");
+        triangleButton.setForeground(triangleColor);
         triangleButton.addActionListener(e -> {
             displayLabel.setText("Triangle");
         });
@@ -59,64 +70,60 @@ public class Window extends JFrame {
         data.add(new JLabel("Perimeter"));
         data.add(perimeter);
 
-        // TODO: Add functionality
-        Board board = new Board();
+        JPanel board = new JPanel();
         board.setBackground(Color.white);
-        board.addMouseListener(board);
+
+        // TODO: Add button functionality
+        // This is the JPanel where we draw the figures, it's like the canvas.
+        board.addMouseListener(new MouseListener() {
+
+            private boolean isOnBoard = true;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (isOnBoard) {
+                    Point a = e.getPoint();
+                    int x = (int) a.getX();
+                    int y = (int) a.getY();
+                    System.out.println("Y" + y);
+                    System.out.println("X" + x);
+
+                    Rectangle rectangle = new Rectangle(x, y, Integer.parseInt(figureSize.getText()), rectangleColor);
+                    rectangle.draw(board.getGraphics());
+                    area.setText(String.valueOf(rectangle.getArea()));
+                    perimeter.setText(String.valueOf(rectangle.getPerimeter()));
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                System.out.println("Mouse Entered");
+                isOnBoard = true;
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                System.out.println("Mouse exited");
+                isOnBoard = false;
+            }
+        });
+
+        eraseButton.addActionListener(e -> {
+            board.repaint();
+        });
 
         add(controls, BorderLayout.WEST);
         add(data, BorderLayout.SOUTH);
         add(board, BorderLayout.CENTER);
 
-    }
-}
-
-class Board extends JPanel implements MouseListener {
-
-
-    private boolean isOnBoard = false;
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (isOnBoard) {
-            PointerInfo a = MouseInfo.getPointerInfo();
-            Point b = a.getLocation();
-            int x = (int) b.getX();
-            int y = (int) b.getY();
-            System.out.println("Y" + y);
-            System.out.println("X" + x);
-
-            // TODO: Draw a fucking rectangle
-            Rectangle rectangle = new Rectangle(x, y);
-            System.out.println(rectangle.getArea());
-            this.add(rectangle);
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("Mouse Entered");
-        isOnBoard = true;
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        System.out.println("Mouse exited");
-        isOnBoard = false;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
     }
 }
