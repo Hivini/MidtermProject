@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Window extends JFrame {
 
@@ -17,6 +18,7 @@ public class Window extends JFrame {
     private Color circleColor = Color.red;
     private Color rectangleColor = Color.blue;
     private Color triangleColor = Color.green;
+    private ArrayList<GeometricFigure> figures = new ArrayList<>();
 
     public Window() {
         super("Paint without budget");
@@ -86,11 +88,28 @@ public class Window extends JFrame {
                     int y = (int) a.getY();
                     System.out.println("Y" + y);
                     System.out.println("X" + x);
+                    if (displayLabel.getText().equals("Rectangle")) {
 
-                    Rectangle rectangle = new Rectangle(x, y, Integer.parseInt(figureSize.getText()), rectangleColor);
-                    rectangle.draw(board.getGraphics());
-                    area.setText(String.valueOf(rectangle.getArea()));
-                    perimeter.setText(String.valueOf(rectangle.getPerimeter()));
+                        Rectangle rectangle = new Rectangle(x, y,
+                                Integer.parseInt(figureSize.getText()), rectangleColor);
+                        figures.add(rectangle);
+                        rectangle.draw(board.getGraphics());
+                        area.setText(String.valueOf(rectangle.getArea()));
+                        perimeter.setText(String.valueOf(rectangle.getPerimeter()));
+                    } else if (displayLabel.getText().equals("Circle")) {
+                        Circle circle = new Circle(x, y, Integer.parseInt(figureSize.getText()), circleColor);
+                        figures.add(circle);
+                        circle.draw(board.getGraphics());
+                        area.setText(String.valueOf(circle.getArea()));
+                        perimeter.setText(String.valueOf(circle.getPerimeter()));
+                    } else if (displayLabel.getText().equals("Triangle")) {
+                        Triangle triangle = new Triangle(x, y, Integer.parseInt(figureSize.getText()), triangleColor);
+                        figures.add(triangle);
+                        triangle.draw(board.getGraphics());
+                        area.setText(String.valueOf(triangle.getArea()));
+                        perimeter.setText(String.valueOf(triangle.getPerimeter()));
+                    }
+
                 }
             }
 

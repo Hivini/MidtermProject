@@ -6,8 +6,8 @@ abstract public class GeometricFigure{
 
     private int x, y;
 
-    public abstract float getPerimeter();
-    public abstract float getArea();
+    public abstract double getPerimeter();
+    public abstract double getArea();
     public abstract void draw(Graphics g);
 
     GeometricFigure(int x, int y) {
