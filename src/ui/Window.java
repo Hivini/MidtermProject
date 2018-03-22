@@ -140,6 +140,13 @@ public class Window extends JFrame {
             board.repaint();
         });
 
+        drawAllButton.addActionListener(e -> {
+            for (GeometricFigure figure:
+                 figures) {
+                figure.draw(board.getGraphics());
+            }
+        });
+
         add(controls, BorderLayout.WEST);
         add(data, BorderLayout.SOUTH);
         add(board, BorderLayout.CENTER);

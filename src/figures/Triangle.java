@@ -8,7 +8,7 @@ public class Triangle extends GeometricFigure {
     private Color color;
 
     public Triangle(int x, int y, int size, Color color) {
-        super(x, y);
+        super(x - (size), y + (size) );
         this.size = size;
         this.color = color;
     }
@@ -26,8 +26,8 @@ public class Triangle extends GeometricFigure {
     @Override
     public void draw(Graphics g) {
         g.setColor(color);
-        int[] pointsx = {getX(), getX() + size, + getX()+(size*2)};
-        int[] pointsy = {getY(), getY() - (size*2), + getY()};
+        int[] pointsx = {getX(), getX() + size, getX()+(size*2)};
+        int[] pointsy = {getY(), getY() - (size*2), getY()};
         g.fillPolygon(pointsx, pointsy, 3);
         System.out.println("Triangle drawn");
     }
