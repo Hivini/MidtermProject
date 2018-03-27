@@ -7,25 +7,26 @@ public class Circle extends GeometricFigure {
     private Color color;
 
     public Circle(int x, int y, int size, Color color) {
-        super(x-(size/2), y-(size/2));
+        super(x-(size), y-(size));
         this.size = size;
         this.color = color;
     }
 
     @Override
     public double getPerimeter() {
-        return 4*Math.PI*size;
+        return Math.round(2*Math.PI*size);
     }
+
 
     @Override
     public double getArea() {
-        return Math.PI*2*size*size;
+        return Math.round(Math.PI *size*size);
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(color);
-        g.fillOval(getX(), getY(), size, size);
+        g.fillOval(getX(), getY(), size*2, size*2);
         System.out.println("Circle drawn");
     }
 }

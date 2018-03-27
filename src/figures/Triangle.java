@@ -15,7 +15,7 @@ public class Triangle extends GeometricFigure {
 
     @Override
     public double getPerimeter() {
-        return (getX()+(size*2) - getX()) * 3;
+        return (size*2) * 3;
     }
 
     @Override
